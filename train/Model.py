@@ -9,6 +9,7 @@ import torch
 from utils.config import *
 from utils.numpy_functions import softmax
 from functools import partial
+import pickle
 
 class Model:
 
@@ -42,9 +43,10 @@ class Model:
 		self.decoder = DecoderRNN(embed_size, hidden_size, 
 							 output_size, num_layers)                
 		# Load the trained model parameters
-        pickle.load = partial(pickle.load, encoding="latin1")
+                pickle.load = partial(pickle.load, encoding="latin1")
 		pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1")
-		self.encoder.load_state_dict(torch.load(self.encoder_path,map_location={'cuda:0': 'cpu'}))
+	        print(self.encoder_path)
+                self.encoder.load_state_dict(torch.load(self.encoder_path,map_location={'cuda:0': 'cpu'}))
 		self.decoder.load_state_dict(torch.load(self.decoder_path,map_location={'cuda:0': 'cpu'}))
 
 		if torch.cuda.is_available():
