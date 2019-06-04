@@ -6,6 +6,9 @@ from torch.autograd import Variable
 
 from utils.build_vocab import Vocabulary
 import pickle
+from functools import partial
+pickle.load = partial(pickle.load, encoding="latin1")
+pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1")
 
 class EncoderCNN(nn.Module):
     def __init__(self, embed_size):
